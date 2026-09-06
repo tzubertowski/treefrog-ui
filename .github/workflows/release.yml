@@ -238,3 +238,57 @@ jobs:
           args=("$RELEASE_TAG" "release/latest/TreeFrogUI_${VERSION}.zip" "release/latest/update.zip" --repo "$GITHUB_REPOSITORY" --title "TreeFrogUI ${VERSION}" --notes-file release-notes.md)
           if [[ "$PRERELEASE" == true || "$RELEASE_TAG" == *-unstable* ]]; then args+=(--prerelease); fi
           gh release create "${args[@]}"
+
+      - name: Post concise release update to Discord
+        if: steps.names.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_GITHUB_UPDATES_WEBHOOK }}
+          RELEASE_TAG: ${{ steps.names.outputs.tag }}
+          VERSION: ${{ steps.names.outputs.version }}
+        working-directory: ${{ env.WORK_ROOT }}/sf3000_treefrogui
+        run: |
+          set -euo pipefail
+
+          releases=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100")
+          previous_body=$(jq -r --arg tag "$RELEASE_TAG" '
+            ([.[] | .tag_name] | index($tag)) as $index |
+            if $index != null and .[$index + 1] then
+              .[$index + 1].body // ""
+            else
+              ""
+            end
+          ' <<<"$releases")
+
+          printf '%s\n' "$previous_body" > "$RUNNER_TEMP/previous-release-notes.md"
+          diff -u "$RUNNER_TEMP/previous-release-notes.md" release-notes.md \
+            > "$RUNNER_TEMP/release-notes.diff" || test $? -eq 1
+
+          awk '
+            !/^\+\+\+ / && /^\+/ {
+              sub(/^\+/, "")
+              if (NF && shown < 12) {
+                print
+                shown++
+              }
+            }
+          ' "$RUNNER_TEMP/release-notes.diff" > "$RUNNER_TEMP/new-release-lines.md"
+
+          if [[ ! -s "$RUNNER_TEMP/new-release-lines.md" ]]; then
+            printf '%s\n' 'No new release-note lines; open the release for details.' \
+              > "$RUNNER_TEMP/new-release-lines.md"
+          fi
+
+          release_url=$(jq -r --arg tag "$RELEASE_TAG" \
+            '.[] | select(.tag_name == $tag) | .html_url' <<<"$releases")
+          description=$(head -c 3800 "$RUNNER_TEMP/new-release-lines.md")
+          payload=$(jq -n \
+            --arg title "TreeFrogUI $VERSION" \
+            --arg url "$release_url" \
+            --arg description "$description" \
+            '{embeds:[{title:$title,url:$url,description:$description,color:3066993,footer:{text:"New lines since the previous release"}}]}')
+
+          curl --fail-with-body --silent --show-error \
+            -H 'Content-Type: application/json' \
+            --data "$payload" \
+            "$DISCORD_WEBHOOK_URL"
