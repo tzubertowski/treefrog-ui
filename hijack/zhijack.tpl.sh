@@ -182,7 +182,6 @@ while true; do
             BIN_PATH=$(sed -n '2p' "$LAUNCH")
             ARG_PATH=$(sed -n '3p' "$LAUNCH")
             rm -f "$LAUNCH"
-            killall rkgame 2>/dev/null #@KILL@
             sleep 0.3
             echo "--- iter $ITER: standalone [$BIN_PATH] ---" >> "$LOG"
             if [ -n "$ARG_PATH" ]; then
@@ -197,7 +196,6 @@ while true; do
         ROM_PATH=$(sed -n '2p' "$LAUNCH")
         rm -f "$LAUNCH"
         if [ -n "$CORE_PATH" ] && [ -n "$ROM_PATH" ]; then
-            killall rkgame 2>/dev/null #@KILL@
             sleep 0.3
             BIN="$PICOARCH"
             case "$CORE_PATH" in
