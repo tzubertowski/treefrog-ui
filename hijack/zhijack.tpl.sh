@@ -193,6 +193,7 @@ while true; do
             continue
         fi
         CORE_PATH=$(sed -n '1p' "$LAUNCH")
+        killall rkgame 2>/dev/null #@KILL@
         ROM_PATH=$(sed -n '2p' "$LAUNCH")
         rm -f "$LAUNCH"
         if [ -n "$CORE_PATH" ] && [ -n "$ROM_PATH" ]; then
