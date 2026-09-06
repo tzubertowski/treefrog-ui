@@ -204,6 +204,7 @@ for x in lgpt lgpt.elf pcsx4all pico286 rockbox rockbox.sh ebook video_player im
     [ -e "$STAGE/cubegm/$x" ] && cp -a "$STAGE/cubegm/$x" "$OUT/cubegm/$x"
 done
 install -m 0755 apps/usb_mode/usb_mode.sh "$OUT/cubegm/usb_mode.sh"
+install -m 0755 apps/shutdown.sh "$OUT/cubegm/shutdown.sh"
 install -m 0755 apps/usb_mode/usb_mtp.sh "$OUT/cubegm/usb_mtp.sh"
 install -m 0755 apps/usb_mode/mtp-server "$OUT/cubegm/mtp-server"
 install -m 0755 apps/usb_mode/usb_exit_watcher "$OUT/cubegm/usb_exit_watcher"

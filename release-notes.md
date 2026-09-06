@@ -9,6 +9,7 @@
 - **R36SX FN button:** the mapping wizard detects the physical FN key and adds
   it as the fifteenth bindable button; other devices retain the normal layout.
 - **PicoArch in-game menu:** the physical FN button now opens the PicoArch menu directly on R36* devices.
+- **Shutdown app:** Apps now includes a one-step poweroff action that syncs the card before turning off the console.
 - Settings categories are collapsible and remember their state across reboots.
 - Per-system extension whitelists hide non-launchable PS1 companion files while
   keeping the folder filter configurable.

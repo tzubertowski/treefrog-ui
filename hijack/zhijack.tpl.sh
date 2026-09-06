@@ -177,6 +177,22 @@ while true; do
     fi #@R36@
 
     if [ -f "$LAUNCH" ]; then
+        LAUNCH_KIND=$(sed -n '1p' "$LAUNCH")
+        if [ "$LAUNCH_KIND" = standalone ]; then
+            BIN_PATH=$(sed -n '2p' "$LAUNCH")
+            ARG_PATH=$(sed -n '3p' "$LAUNCH")
+            rm -f "$LAUNCH"
+            killall rkgame 2>/dev/null #@KILL@
+            sleep 0.3
+            echo "--- iter $ITER: standalone [$BIN_PATH] ---" >> "$LOG"
+            if [ -n "$ARG_PATH" ]; then
+                "$BIN_PATH" "$ARG_PATH" >> /tmp/treefrog_ui.log 2>&1
+            else
+                "$BIN_PATH" >> /tmp/treefrog_ui.log 2>&1
+            fi
+            sleep 0.2
+            continue
+        fi
         CORE_PATH=$(sed -n '1p' "$LAUNCH")
         ROM_PATH=$(sed -n '2p' "$LAUNCH")
         rm -f "$LAUNCH"
