@@ -6,3 +6,7 @@ In Cold Blood,PAL,SCES-02153,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.
 Aconcagua,NTSC,SCPS-10131,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,Pefect,Good,Low,Pefect,Global default,"Based on my testing, the version I tried is translated into Spanish.",MartStartIV
 Alien Resurrection,PAL,SLES-02913,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,Good,Good,Good,Playable,Global default,Good overall performance,MartStartIV
 F1 2000,PAL,SLES-02722,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,None,None,None,Not Playable,None,It only loads the EA GAMES intro video,MartStartIV
+Alien Trilogy,PAL,SLES-00101,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,Good,Good,Good,Playable,Global default,"Sometimes the game drops to around 4 fps, but only on occasion.",MartStartIV
+Alone in the dark - The New Nightmared,PAL,SLES-02801,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,Good,Pefect,Regular,Playable,Global default,The performance is quite good.,MartStartIV
+Atlantis: The Lost Empire,PAL,SCES-03541,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,Good,Good,Good,Playable,Global default,It feels a bit demanding for the console at times.,MartStartIV
+Batman & Robin,PAL,SLES-00102,BIN/CUE,Pcsx4all,R36HD,R36HD (Backup 2.7 R36SX),V1.3.0_I,Regular,Good,Regular,Playable,Global default,The FPS are a bit low but stable.,MartStartIV
